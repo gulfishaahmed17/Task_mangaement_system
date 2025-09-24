@@ -1,0 +1,56 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+    }
+    nav {
+      background-color: #343a40;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+    }
+    .task {
+      border-left: 10px solid;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+    .high { border-color: red; }
+    .medium { border-color: orange; }
+    .low { border-color: green; }
+  </style>
+</head>
+<body>
+  <nav>Welcome, {{ name }} | <a href="/logout" style="color: #ccc;">Logout</a></nav>
+
+  <div class="container">
+    <h2>📋 Your Tasks</h2>
+    {% for task in tasks %}
+      <div class="task {{ task.priority }}">
+        <p><strong>Task:</strong> {{ task.task }}</p>
+        <p><strong>Urgency:</strong> {{ task.urgency }}</p>
+        <p><strong>Due in:</strong> {{ task.due_in }} days</p>
+        <p><strong>Completion:</strong> {{ task.completion }}%</p>
+      </div>
+    {% else %}
+      <p>No tasks added yet.</p>
+    {% endfor %}
+  </div>
+</body>
+</html>

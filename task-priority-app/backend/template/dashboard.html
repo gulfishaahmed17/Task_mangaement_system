@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f8;
+    }
+
+    .navbar {
+      background-color: #0d47a1;
+      padding: 15px 20px;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #0d47a1;
+      margin-bottom: 20px;
+    }
+
+    .task {
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 10px solid;
+    }
+
+    .high {
+      border-color: #e53935;
+    }
+
+    .medium {
+      border-color: #fb8c00;
+    }
+
+    .low {
+      border-color: #43a047;
+    }
+
+    .details {
+      flex-grow: 1;
+    }
+
+    .details span {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .actions button {
+      padding: 5px 10px;
+      margin-left: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .delete {
+      background: #e53935;
+      color: white;
+    }
+
+    .edit {
+      background: #1976d2;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">📋 Zephyr Dashboard</div>
+
+  <div class="container">
+    <h2>My Tasks</h2>
+    <div id="taskList"></div>
+  </div>
+
+  <script>
+    function getPriorityClass(urgency, dueIn, completion) {
+      if (urgency >= 8 || dueIn <= 1 || completion < 30) return "high";
+      if (urgency >= 5 || dueIn <= 3 || completion < 70) return "medium";
+      return "low";
+    }
+
+    function loadTasks() {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+      const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+      tasks.forEach((task, index) => {
+        const priority = getPriorityClass(
+          task.urgency,
+          task.due_in,
+          task.completion
+        );
+
+        const div = document.createElement("div");
+        div.className = `task ${priority}`;
+        div.innerHTML = `
+          <div class="details">
+            <span><strong>Task:</strong> ${task.task}</span>
+            <span><strong>Urgency:</strong> ${task.urgency}</span>
+            <span><strong>Due in:</strong> ${task.due_in} days</span>
+            <span><strong>Completion:</strong> ${task.completion}%</span>
+          </div>
+          <div class="actions">
+            <button class="edit" onclick="editTask(${index})">✏️</button>
+            <button class="delete" onclick="deleteTask(${index})">🗑️</button>
+          </div>
+        `;
+        taskList.appendChild(div);
+      });
+    }
+
+    function deleteTask(index) {
+      let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+      tasks.splice(index, 1);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      loadTasks();
+    }
+
+    function editTask(index) {
+      alert("✏️ Edit functionality coming soon!");
+    }
+
+    window.onload = loadTasks;
+  </script>
+</body>
+</html>
+
