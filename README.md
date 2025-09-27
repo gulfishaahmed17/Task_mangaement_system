@@ -1,7 +1,5 @@
 # Task_mangaement_system
 
-# Task Priority App
-
 ## Description
 A task management system to create, prioritize, and track tasks.
 
