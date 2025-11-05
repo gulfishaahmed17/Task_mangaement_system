@@ -1,4 +1,4 @@
-# Task_mangaement_system
+# Task_management_system
 
 ## Description
 A task management system to create, prioritize, and track tasks.
